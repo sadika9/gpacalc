@@ -1,9 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
 <head>
-    <title>GPA Calc</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
+    <link rel="stylesheet" href="./stylesheets/pure-min.css">
+    
     <script type="text/javascript" src="./js/jquery-1.11.0.min.js"></script>
 
     <script type="text/javascript">
@@ -101,25 +104,26 @@
 </head>
 
 <body>
-    <select id="year">
-        <option value="1">1st Year</option>
-        <option value="2">2nd Year</option>
-        <option value="3">3rd Year</option>
-        <option value="4">4th Year</option>
-    </select>
-    <select id="semester">
-        <option value="1">1st Semester</option>
-        <option value="2">2nd Semester</option>
-    </select>
-    <select id="course"></select>
-    <select id="grade"></select>
-    <input id="count_for_gpa" type="checkbox">Count for GPA</input>
-    <button id="add_course">Add</button>
-
+    <div class="pure-form">
+        <select id="year">
+            <option value="1">1st Year</option>
+            <option value="2">2nd Year</option>
+            <option value="3">3rd Year</option>
+            <option value="4">4th Year</option>
+        </select>
+        <select id="semester">
+            <option value="1">1st Semester</option>
+            <option value="2">2nd Semester</option>
+        </select>
+        <select id="course"></select>
+        <select id="grade"></select>
+        <input id="count_for_gpa" type="checkbox">Count for GPA</input>
+        <button id="add_course" class="pure-button pure-button-primary">Add</button>
+    </div>
     <br/>
     <br/>
 
-    <table id="student_courses" border="1">
+    <table id="student_courses" class="pure-table pure-table-bordered">
         <thead>
             <th>Year</th>
             <th>Semester</th>
@@ -133,7 +137,8 @@
     </table>
 
     <br/>
-    <br/>GPA: <span id="overall_gpa">0.00</span>
+    <br/>
+    <h4>GPA: <span id="overall_gpa">0.00</span></h4>
 </body>
 
 </html>
