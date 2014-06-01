@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>GPA Calc</title>
+
+    <script type="text/javascript" src="./js/jquery-1.11.0.min.js"></script>
+
+    <script type="text/javascript">
+        var courses = [];
+        var grades = [];
+
+        $(document).ready(function () {
+            $.getJSON('./data/courses.json', function (data) {
+                courses = data.courses;
+                $.each(courses, function (i, c) {
+                    $("#course").append($("<option></option>").val(c.code).html(c.code + " - " + c.title));
+                });
+            });
+
+            $.getJSON('./data/grades.json', function (data) {
+                grades = data.grades;
+                $.each(grades, function (i, g) {
+                    $("#grade").append($("<option></option>").val(g.grade).html(g.grade));
+                });
+            });
+
+            $("#course").change(function () {
+                var selectedCourse = $("#course").find('option:selected').val();
+
+                $.each(courses, function (i, c) {
+                    if (c.code === selectedCourse) {
+                        $("#count_for_gpa").prop('checked', c.count_for_gpa);
+                        return;
+                    }
+                });
+            });
+
+            $("#add_course").click(function () {
+                var selectedCourseCode = $("#course").find('option:selected').val();
+
+                var currentCourse = {};
+                $.each(courses, function (i, c) {
+                    if (c.code === selectedCourseCode) {
+                        currentCourse = c;
+                        return;
+                    }
+                });
+                var row = "<tr>" + "<td class='yearCell'>" + $("#year").find('option:selected').val() + "</td>" +
+                    "<td class='semesterCell'>" + $("#semester").find('option:selected').val() + "</td>" +
+                    "<td class='codeCell'>" + currentCourse.code + " - " + currentCourse.title + "</td>" +
+                    "<td class='creditsCell'>" + currentCourse.credits + "</td>" +
+                    "<td class='gradeCell'>" + $("#grade").find('option:selected').val() + "</td>" +
+                    "<td>" + "<input class='countForGpaCheckBox' type='checkbox' " +
+                    ($("#count_for_gpa").prop('checked') ? "checked" : "") +
+                    " onClick='calculateGpa()'></input>" + "</td>" +
+                    "</tr>";
+                $(row).appendTo("#student_courses tbody");
+
+                calculateGpa();
+            });
+        });
+
+        function calculateGpa() {
+            var totalCredits = 0.0;
+            var sumCreditIntoGradePoints = 0.0;
+            $('#student_courses > tbody  > tr').each(function () {
+
+                if ($(this).find(".countForGpaCheckBox").prop('checked') == false)
+                    return;
+
+                var credits = Number($(this).find(".creditsCell").html())
+                var grade = $(this).find(".gradeCell").html();
+
+                var gp = 0.0;
+                $.each(grades, function (i, g) {
+                    if (g.grade === grade) {
+                        gp = g.grade_point;
+                        return;
+                    }
+                });
+                sumCreditIntoGradePoints += credits * gp;
+                totalCredits += credits;
+            });
+            var gpa = sumCreditIntoGradePoints / totalCredits;
+
+            if (isNaN(gpa))
+                $("#overall_gpa").html(precise_round(0, 2));
+            else
+                $("#overall_gpa").html(precise_round(gpa, 2));
+        }
+
+        /*** This method from: http://stackoverflow.com/a/16319855 ***/
+        function precise_round(num, decimals) {
+            var sign = num >= 0 ? 1 : -1;
+            return (Math.round((num * Math.pow(10, decimals)) + (sign * 0.001)) / Math.pow(10, decimals)).toFixed(
+                decimals);
+        }
+    </script>
+
+</head>
+
+<body>
+    <select id="year">
+        <option value="1">1st Year</option>
+        <option value="2">2nd Year</option>
+        <option value="3">3rd Year</option>
+        <option value="4">4th Year</option>
+    </select>
+    <select id="semester">
+        <option value="1">1st Semester</option>
+        <option value="2">2nd Semester</option>
+    </select>
+    <select id="course"></select>
+    <select id="grade"></select>
+    <input id="count_for_gpa" type="checkbox">Count for GPA</input>
+    <button id="add_course">Add</button>
+
+    <br/>
+    <br/>
+
+    <table id="student_courses" border="1">
+        <thead>
+            <th>Year</th>
+            <th>Semester</th>
+            <th>Course</th>
+            <th>Credits</th>
+            <th>Grade</th>
+            <th>Count for GPA</th>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <br/>
+    <br/>GPA: <span id="overall_gpa">0.00</span>
+</body>
+
+</html>

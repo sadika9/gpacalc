@@ -1,0 +1,201 @@
+{
+  "courses": [
+    {
+      "code": "EN100",
+      "title": "Basic English",
+      "credits": 2,
+      "prerequisites": [],
+      "equivalent": [],
+      "count_for_gpa": false,
+      "compulsory_for": "general|special"
+    },
+    {
+      "code": "CS100",
+      "title": "Computer Applications",
+      "credits": 2,
+      "prerequisites": [],
+      "equivalent": [],
+      "count_for_gpa": false,
+      "compulsory_for": "general|special"
+    },
+    {
+      "code": "BL100",
+      "title": "Basic Life Sciences",
+      "credits": 2,
+      "prerequisites": [],
+      "equivalent": [],
+      "count_for_gpa": false,
+      "compulsory_for": "general|special"
+    },
+    {
+      "code": "MT100",
+      "title": "Mathematics for Biological Sciences",
+      "credits": 2,
+      "prerequisites": [],
+      "equivalent": [],
+      "count_for_gpa": false,
+      "compulsory_for": "general|special"
+    },
+    {
+      "code": "SE100",
+      "title": "Introduction to Science and Society",
+      "credits": 0,
+      "prerequisites": [],
+      "equivalent": [],
+      "count_for_gpa": false,
+      "compulsory_for": "general|special"
+    },
+    {
+      "code": "CS101",
+      "title": "Introduction to Computer Science",
+      "credits": 3,
+      "prerequisites": [],
+      "equivalent": [],
+      "count_for_gpa": true,
+      "compulsory_for": "general|special"
+    },
+    {
+      "code": "CS102",
+      "title": "Programming Techniques",
+      "credits": 3,
+      "prerequisites": [],
+      "equivalent": [],
+      "count_for_gpa": true,
+      "compulsory_for": "general|special"
+    },
+    {
+      "code": "CS104",
+      "title": "Structured Oriented Programming Practical",
+      "credits": 1,
+      "prerequisites": [
+        "CS101",
+        "CS102"
+      ],
+      "equivalent": [],
+      "count_for_gpa": true,
+      "compulsory_for": "general|special"
+    },
+    {
+      "code": "CS105",
+      "title": "Object Oriented Programming Practical",
+      "credits": 1,
+      "prerequisites": [
+        "CS101",
+        "CS102"
+      ],
+      "equivalent": [],
+      "count_for_gpa": true,
+      "compulsory_for": "general|special"
+    },
+    {
+      "code": "CS201",
+      "title": "Data Structures",
+      "credits": 2,
+      "prerequisites": [
+        "CS101",
+        "CS104",
+        "CS105"
+      ],
+      "equivalent": [],
+      "count_for_gpa": true,
+      "compulsory_for": "general|special"
+    },
+    {
+      "code": "CS202",
+      "title": "Data Structures Practicals",
+      "credits": 1,
+      "prerequisites": [
+        "CS104",
+        "CS105",
+        "CS201"
+      ],
+      "equivalent": [],
+      "count_for_gpa": true,
+      "compulsory_for": "general|special"
+    },
+    {
+      "code": "CS203",
+      "title": "Database Management Systems",
+      "credits": 2,
+      "prerequisites": [
+        "CS101",
+        "CS104",
+        "CS105"
+      ],
+      "equivalent": [],
+      "count_for_gpa": true,
+      "compulsory_for": "general|special"
+    },
+    {
+      "code": "CS204",
+      "title": "Programming using Database Management Systems",
+      "credits": 1,
+      "prerequisites": [
+        "CS104",
+        "CS105",
+        "CS202",
+        "CS203"
+      ],
+      "equivalent": [],
+      "count_for_gpa": true,
+      "compulsory_for": "general|special"
+    },
+    {
+      "code": "CS205",
+      "title": "Computer Architecture",
+      "credits": 3,
+      "prerequisites": [
+        "CS101",
+        "CS102"
+      ],
+      "equivalent": [],
+      "count_for_gpa": true,
+      "compulsory_for": "special"
+    },
+    {
+      "code": "CS206",
+      "title": "Computer Device Interfacing",
+      "credits": 2,
+      "prerequisites": [
+        "CS205"
+      ],
+      "equivalent": [],
+      "count_for_gpa": true,
+      "compulsory_for": "special"
+    },
+    {
+      "code": "CS209",
+      "title": "Concurrent Programming",
+      "credits": 1,
+      "prerequisites": [
+        "CS105",
+        "CS201"
+      ],
+      "equivalent": [],
+      "count_for_gpa": true,
+      "compulsory_for": "none"
+    },
+    {
+      "code": "BC201",
+      "title": "Basic Computing I",
+      "credits": 2,
+      "prerequisites": [
+        "CS100"
+      ],
+      "equivalent": [],
+      "count_for_gpa": true,
+      "compulsory_for": "none"
+    },
+    {
+      "code": "BC202",
+      "title": "Micro Computer Applications I",
+      "credits": 1,
+      "prerequisites": [
+        "BS201"
+      ],
+      "equivalent": [],
+      "count_for_gpa": true,
+      "compulsory_for": "none"
+    }
+  ]
+} 

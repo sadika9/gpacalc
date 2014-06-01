@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>GPA Calc</title>
+
+    <script type="text/javascript" src="./js/jquery-1.11.0.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+
+            $.getJSON('./data/courses.json', function (data) {
+                $.each(data.courses, function (i, c) {
+                    var compulsory = ""
+                    if (c.compulsory_for.indexOf("general") != -1) compulsory += "General"
+                    if (c.compulsory_for.indexOf("|") != -1) compulsory += " & "
+                    if (c.compulsory_for.indexOf("special") != -1) compulsory += " Special"
+
+                    var countForGpa = c.count_for_gpa ? "Yes" : "No"
+
+                    var tblRow = "<tr>" + "<td>" + c.code + "</td>" + "<td>" + c.title + "</td>" + "<td>" +
+                        c.credits + "</td>" + "<td>" + c.prerequisites + "</td>" + "<td>" + c.equivalent +
+                        "</td>" + "<td>" + compulsory + "</td>" + "<td>" + countForGpa + "</td>" + "</tr>"
+                    $(tblRow).appendTo("#coursedata tbody");
+                });
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <table id="coursedata" border="2">
+            <thead>
+                <th>Course Number</th>
+                <th>Course Title</th>
+                <th>No. of Credits</th>
+                <th>Prerequisites</th>
+                <th>Equivalent to</th>
+                <th>Compulsory for</th>
+                <th>Count for GPA</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+
+</html>
