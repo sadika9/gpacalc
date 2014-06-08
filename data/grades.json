@@ -2,11 +2,11 @@
   "grades": [
     {
       "grade": "A+",
-      "grade_point": 4.0
+      "grade_point": 4
     },
     {
       "grade": "A",
-      "grade_point": 4.0
+      "grade_point": 4
     },
     {
       "grade": "A-",
@@ -18,7 +18,7 @@
     },
     {
       "grade": "B",
-      "grade_point": 3.0
+      "grade_point": 3
     },
     {
       "grade": "B-",
@@ -30,7 +30,7 @@
     },
     {
       "grade": "C",
-      "grade_point": 2.0
+      "grade_point": 2
     },
     {
       "grade": "C-",
@@ -42,11 +42,11 @@
     },
     {
       "grade": "D",
-      "grade_point": 1.0
+      "grade_point": 1
     },
     {
       "grade": "F",
       "grade_point": 0
     }
   ]
-} 
+}
