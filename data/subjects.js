@@ -16,6 +16,10 @@ var subjects = [
     code: "CS"
   },
   {
+    subject: "English",
+    code: "EN"
+  },
+  {
     subject: "Geology",
     code: "GL"
   },

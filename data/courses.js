@@ -5886,5 +5886,17 @@ var courses = [
     principal_subject_area: [
       "SE"
     ]
+  },
+  {
+    code: "EN200",
+    title: "English for Academic purposes",
+    credits: 2,
+    prerequisites: [],
+    equivalent: [],
+    exclude_from_gpa: true,
+    compulsory_for_degree: [],
+    principal_subject_area: [
+      "EN"
+    ]
   }
 ];
