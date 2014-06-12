@@ -2,52 +2,64 @@
 <html>
 
 <head>
-    <title>GPA Calc</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - GPA Calc</title>
 
-    <script type="text/javascript" src="./js/jquery-1.11.0.min.js"></script>
-
-    <script type="text/javascript">
-        $(function () {
-
-            $.getJSON('./data/courses.json', function (data) {
-                $.each(data.courses, function (i, c) {
-                    var compulsory = ""
-                    if (c.compulsory_for.indexOf("general") != -1) compulsory += "General"
-                    if (c.compulsory_for.indexOf("|") != -1) compulsory += " & "
-                    if (c.compulsory_for.indexOf("special") != -1) compulsory += " Special"
-
-                    var countForGpa = c.count_for_gpa ? "Yes" : "No"
-
-                    var tblRow = "<tr>" + "<td>" + c.code + "</td>" + "<td>" + c.title + "</td>" + "<td>" +
-                        c.credits + "</td>" + "<td>" + c.prerequisites + "</td>" + "<td>" + c.equivalent +
-                        "</td>" + "<td>" + compulsory + "</td>" + "<td>" + countForGpa + "</td>" + "</tr>"
-                    $(tblRow).appendTo("#coursedata tbody");
-                });
-            });
-        });
-    </script>
-
+    <link rel="stylesheet" href="./stylesheets/pure-min.css">
 </head>
 
 <body>
-    <div class="wrapper">
-        <table id="coursedata" border="2">
-            <thead>
-                <th>Course Number</th>
-                <th>Course Title</th>
-                <th>No. of Credits</th>
-                <th>Prerequisites</th>
-                <th>Equivalent to</th>
-                <th>Compulsory for</th>
-                <th>Count for GPA</th>
-            </thead>
-            <tbody>
-
-            </tbody>
-        </table>
-
+    <div class="pure-g">
+        <div class="pure-u-5-5">
+            <table id="courses_table" class="pure-table pure-table-bordered">
+                <thead>
+                    <th>Code</th>
+                    <th>Title</th>
+                    <th>No. of Credits</th>
+                    <th>Prerequisites</th>
+                    <th>Equivalent to</th>
+                    <th>Include in GPA</th>
+                    <th>Compulsory for</th>
+                    <th>Principal Subject Area</th>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
 
+    <!-- data -->
+    <script type="text/javascript" src="./data/courses.js"></script>
+
+    <!-- logic -->
+    <script type="text/javascript">
+        for (var i = 0; i < courses.length; ++i) {
+            var course = courses[i];
+
+            var tbody = document.getElementById("courses_table").getElementsByTagName("TBODY")[0];
+
+            var rowCount = tbody.rows.length;
+            var row = tbody.insertRow(rowCount);
+
+            // Code
+            row.insertCell(0).appendChild(document.createTextNode(courses[i].code));
+            // Title
+            row.insertCell(1).appendChild(document.createTextNode(courses[i].title));
+            // Credits
+            row.insertCell(2).appendChild(document.createTextNode(courses[i].credits));
+            // Prerequisites
+            row.insertCell(3).appendChild(document.createTextNode(courses[i].prerequisites));
+            // Equivalent
+            row.insertCell(4).appendChild(document.createTextNode(courses[i].equivalent));
+            // Include In GPA
+            row.insertCell(5).appendChild(document.createTextNode((!courses[i].exclude_from_gpa) ? "Yes" : "No"));
+            // Compulsory for Degree
+            row.insertCell(6).appendChild(document.createTextNode(courses[i].compulsory_for_degree));
+            // CPrincipal Subject Area
+            row.insertCell(7).appendChild(document.createTextNode(courses[i].principal_subject_area));
+        }
+    </script>
 </body>
 
 </html>
