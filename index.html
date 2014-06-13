@@ -16,8 +16,7 @@
     </style>
 </head>
 
-<body>
-
+<body onload="showYearDivs()">
     <div>
         <div class="pure-form">
             <h4> **add subjects**subject gpa is calcuated for following subjects** </h4>
@@ -70,7 +69,7 @@
     <br/>
 
     <div>
-        <div>
+        <div id="student_courses_year1_div">
             <h5>Year 1</h5>
             <table id="student_courses_year1_table" class="pure-table pure-table-bordered">
                 <thead>
@@ -93,7 +92,7 @@
             </table>
         </div>
         <br/>
-        <div>
+        <div id="student_courses_year2_div">
             <h5>Year 2</h5>
             <table id="student_courses_year2_table" class="pure-table pure-table-bordered">
                 <thead>
@@ -116,7 +115,7 @@
             </table>
         </div>
         <br/>
-        <div>
+        <div id="student_courses_year3_div">
             <h5>Year 3</h5>
             <table id="student_courses_year3_table" class="pure-table pure-table-bordered">
                 <thead>
@@ -139,7 +138,7 @@
             </table>
         </div>
         <br/>
-        <div>
+        <div id="student_courses_year4_div">
             <h5>Year 4</h5>
             <table id="student_courses_year4_table" class="pure-table pure-table-bordered">
                 <thead>
@@ -519,6 +518,7 @@
             updateCourseTables();
             updateOverallGPAs();
             updateSubjectGPAs();
+            showYearDivs();
         }
 
         function removeCourse(object) {
@@ -538,6 +538,7 @@
 
             updateOverallGPAs();
             updateSubjectGPAs();
+            showYearDivs();
         }
 
         function updateCourseTables() {
@@ -598,6 +599,13 @@
                     }
                     cell.appendChild(eleChBx);
                 }
+            }
+        }
+        
+        function showYearDivs() {
+            for (var i = 1; i <= 4; ++i) {   
+                var tbody = document.getElementById("student_courses_year" + i + "_table").getElementsByTagName("TBODY")[0];
+                document.getElementById("student_courses_year" + i + "_div").style.display = (tbody.rows.length > 0) ? "table" : "none";
             }
         }
     </script>
