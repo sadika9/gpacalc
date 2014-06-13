@@ -85,9 +85,9 @@ function removeSubject(object) {
         object = object.parentNode;
     }
 
-    var sub = object.getElementsByTagName('TD')[1].innerHTML;
+    var code = object.getElementsByTagName('TD')[2].innerHTML;
     for (var i = 0, nStuSubj = studentSubjects.length; i < nStuSubj; ++i) {
-        if (studentSubjects[i].subject === sub) {
+        if (studentSubjects[i].code === code) {
             studentSubjects.splice(i, 1);
             break;
         }
@@ -98,7 +98,7 @@ function removeSubject(object) {
     updateStudentCoursesTableHeadings();
     updateStudentCoursesTableFooters();
     var subject = {
-        subject: sub
+        code: code
     };
     updateExistingCoursesSubjectGPAStates("remove_subject", subject);
     updateCourseTables();
@@ -114,7 +114,6 @@ function updateMainSubjectsTable() {
         var rowCount = tbody.rows.length;
         var row = tbody.insertRow(rowCount);
 
-
         var cell = row.insertCell(0);
         var element = document.createElement("button");
         element.className = "pure-button delete_row_button";
@@ -125,6 +124,7 @@ function updateMainSubjectsTable() {
         cell.appendChild(element);
 
         row.insertCell(1).appendChild(document.createTextNode(subject.subject));
+        row.insertCell(2).appendChild(document.createTextNode(subject.code));
     }
 }
 
@@ -147,7 +147,7 @@ function updateStudentCoursesTableHeadings() {
 
             var newTH = document.createElement('th');
             headRow.appendChild(newTH);
-            newTH.innerHTML = studentSubjects[i].subject;
+            newTH.innerHTML = studentSubjects[i].code;
         }
     }
 }
@@ -181,13 +181,13 @@ function updateExistingCoursesSubjectGPAStates(action, subject) {
         for (var i = 0, nStuCourses = studentCourses.length; i < nStuCourses; ++i) {
             for (var j = 0, nSubjArea = studentCourses[i].course.principal_subject_area.length; j < nSubjArea; ++j) {
                 if (studentCourses[i].course.principal_subject_area[j] === subject.code) {
-                    studentCourses[i].include_in_subject_gpa.push(subject.subject);
+                    studentCourses[i].include_in_subject_gpa.push(subject.code);
                 }
             }
         }
     } else {
         for (var i = 0, nStuCourses = studentCourses.length; i < nStuCourses; ++i) {
-            var index = studentCourses[i].include_in_subject_gpa.indexOf(subject.subject);
+            var index = studentCourses[i].include_in_subject_gpa.indexOf(subject.code);
             if (index > -1) {
                 studentCourses[i].include_in_subject_gpa.splice(index, 1);
             }
@@ -301,7 +301,7 @@ function addCourse() {
     for (var i = 0; i < studentSubjects.length; ++i) {
         for (var j = 0; j < course.principal_subject_area.length; ++j) {
             if (course.principal_subject_area[j] === studentSubjects[i].code)
-                studentCourse.include_in_subject_gpa.push(studentSubjects[i].subject);
+                studentCourse.include_in_subject_gpa.push(studentSubjects[i].code);
         }
     }
 
@@ -392,14 +392,14 @@ function updateCourseTables() {
             var cell = row.insertCell(j + 7);
             var eleChBx = document.createElement("input");
             eleChBx.type = "checkbox";
-            eleChBx.value = studentSubjects[j].subject;
+            eleChBx.value = studentSubjects[j].code;
             eleChBx.onclick = function () {
                 updateIncludeInSubjectGPAState(this)
             };
 
             for (var k = 0; k < studentCourses[i].include_in_subject_gpa.length; ++k) {
-                var sub = studentCourses[i].include_in_subject_gpa[k];
-                if (sub === studentSubjects[j].subject) {
+                var subCode = studentCourses[i].include_in_subject_gpa[k];
+                if (subCode === studentSubjects[j].code) {
                     eleChBx.checked = true;
                     break;
                 } else {
@@ -414,7 +414,7 @@ function updateCourseTables() {
 function showYearDivs() {
     for (var i = 1; i <= 4; ++i) {
         var tbody = document.getElementById("student_courses_year" + i + "_table").getElementsByTagName("TBODY")[0];
-        document.getElementById("student_courses_year" + i + "_div").style.display = (tbody.rows.length > 0) ? "table" : "none";
+        document.getElementById("student_courses_year" + i + "_div").style.display = (tbody.rows.length > 0) ? "block" : "none";
     }
 }
 
@@ -439,7 +439,7 @@ function updateIncludeInOverallGPAState(object) {
 
 function updateIncludeInSubjectGPAState(object) {
     checkBoxState = object.checked;
-    subject = object.value;
+    subjCode = object.value;
 
     while (object.tagName != 'TR') {
         object = object.parentNode;
@@ -452,10 +452,10 @@ function updateIncludeInSubjectGPAState(object) {
         if (stuCourse.course.code === courseCode) {
 
             if (checkBoxState === true) {
-                stuCourse.include_in_subject_gpa.push(subject);
+                stuCourse.include_in_subject_gpa.push(subjCode);
                 break;
             } else {
-                var index = stuCourse.include_in_subject_gpa.indexOf(subject);
+                var index = stuCourse.include_in_subject_gpa.indexOf(subjCode);
                 if (index > -1) stuCourse.include_in_subject_gpa.splice(index, 1);
                 break;
             }
@@ -535,13 +535,13 @@ function updateOverallGPAs() {
 }
 
 /****************** logic: calculating subject GPAs ******************/
-function totalSubjectCredits(year, subject) {
+function totalSubjectCredits(year, subjectCode) {
     var totalCredits = 0;
 
     for (var i = 0, nStuCourses = studentCourses.length; i < nStuCourses; ++i) {
         var stuCourse = studentCourses[i];
 
-        if (stuCourse.year === year && stuCourse.include_in_subject_gpa.indexOf(subject) > -1) {
+        if (stuCourse.year === year && stuCourse.include_in_subject_gpa.indexOf(subjectCode) > -1) {
             totalCredits += stuCourse.course.credits;
         }
     }
@@ -549,13 +549,13 @@ function totalSubjectCredits(year, subject) {
     return totalCredits;
 }
 
-function totalSubjectGradePointIntoCredit(year, subject) {
+function totalSubjectGradePointIntoCredit(year, subjectCode) {
     var sum = 0;
 
     for (var i = 0, nStuCourses = studentCourses.length; i < nStuCourses; ++i) {
         var stuCourse = studentCourses[i];
 
-        if (stuCourse.year === year && stuCourse.include_in_subject_gpa.indexOf(subject) > -1) {
+        if (stuCourse.year === year && stuCourse.include_in_subject_gpa.indexOf(subjectCode) > -1) {
             sum += stuCourse.course.credits * gradeToGradePoint(stuCourse.grade);
         }
     }
@@ -563,19 +563,19 @@ function totalSubjectGradePointIntoCredit(year, subject) {
     return sum;
 }
 
-function finalSubjectGPA(subject) {
+function finalSubjectGPA(subjectCode) {
     var sumCredits = 0;
     var sumGradePointIntoCredit = 0;
 
     for (var i = 1; i <= 4; ++i) {
-        sumCredits += totalSubjectCredits(i, subject);
-        sumGradePointIntoCredit += totalSubjectGradePointIntoCredit(i, subject);
+        sumCredits += totalSubjectCredits(i, subjectCode);
+        sumGradePointIntoCredit += totalSubjectGradePointIntoCredit(i, subjectCode);
     }
 
     var divEle = document.getElementById("final_subject_gpas");
 
     var ele = document.createElement("H4");
-    ele.innerHTML = subject;
+    ele.innerHTML = subjectCode;
 
     if (sumCredits <= 0) {
         ele.innerHTML += ": 0.00";
@@ -588,14 +588,14 @@ function finalSubjectGPA(subject) {
     divEle.appendChild(ele);
 }
 
-function overallSubjectGPA(year, subject) {
+function overallSubjectGPA(year, subjectCode) {
     var tfoot = document.getElementById("student_courses_year" + year + "_table").getElementsByTagName("TFOOT")[0];
 
     // subject heading order is same as studentSubjects array order
     // so we can use array index to get right footer cell
     var stuSubjIndex = -1;
     for (var i = 0, nStuSubj = studentSubjects.length; i < nStuSubj; ++i) {
-        if (studentSubjects[i].subject === subject) {
+        if (studentSubjects[i].code === subjectCode) {
             stuSubjIndex = i;
             break;
         }
@@ -607,8 +607,8 @@ function overallSubjectGPA(year, subject) {
     var subjCellIndex = nFixedCells + stuSubjIndex; // index of subject footer cell
 
 
-    var sumCredits = totalSubjectCredits(year, subject);
-    var sumGradePointIntoCredit = totalSubjectGradePointIntoCredit(year, subject);
+    var sumCredits = totalSubjectCredits(year, subjectCode);
+    var sumGradePointIntoCredit = totalSubjectGradePointIntoCredit(year, subjectCode);
 
     if (sumCredits <= 0) {
         tfoot.rows[0].cells[subjCellIndex].innerHTML = "0.00";
@@ -622,13 +622,13 @@ function overallSubjectGPA(year, subject) {
 function updateSubjectGPAs() {
     for (var year = 1; year <= 4; ++year) {
         for (var j = 0, nStuSubj = studentSubjects.length; j < nStuSubj; ++j) {
-            overallSubjectGPA(year, studentSubjects[j].subject);
+            overallSubjectGPA(year, studentSubjects[j].code);
         }
     }
 
     document.getElementById("final_subject_gpas").innerHTML = "";
     for (var i = 0, nStuSubj = studentSubjects.length; i < nStuSubj; ++i) {
-        finalSubjectGPA(studentSubjects[i].subject)
+        finalSubjectGPA(studentSubjects[i].code)
     }
 }
 
