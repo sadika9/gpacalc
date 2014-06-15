@@ -5,180 +5,207 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="./stylesheets/pure-min.css">
-    <style>
-        .delete_row_button {
-            color: white;
-            border-radius: 4px;
-            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-            background: rgb(202, 60, 60);
-        }
-    </style>
+    <title>GPA Calc</title>
+
+    <link rel="stylesheet" href="./stylesheets/pure/pure-min.css">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="./stylesheets/pure/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="./stylesheets/pure/grids-responsive-min.css">
+    <!--<![endif]-->
+
+    <link rel="stylesheet" href="./stylesheets/gpa_calc_style.css">
 </head>
 
-<body onload="showYearDivs()">
-    <div>
-        <div class="pure-form">
-            <h4> **add subjects**subject gpa is calcuated for following subjects** </h4>
-            <label for="main_subjects">Subject:</label>
-            <select id="main_subjects"></select>
+<body>
+    <div id="menu" class="pure-menu pure-menu-open pure-menu-horizontal">
+        <ul>
+            <li><a id="save_button" onClick="saveStudentData()">Save</a>
+            </li>
+            <li>
+                <a id="load_button" onClick="loadStudentData()">Load</a>
+                <input type="file" id="load_file_input" accept="application/json" style="display:none" onchange="handleFile(this.files)">
+            </li>
+            <li><a href="./all_courses.html">All Courses</a>
+            </li>
+        </ul>
 
-            <button id="add_main_subject" class="pure-button pure-button-primary" onClick="addSubject()">Add Subject</button>
-        </div>
-
-        <table id="student_main_subjects_table" class="pure-table pure-table-bordered">
-            <thead>
-                <th></th>
-                <th>Subject</th>
-                <th>Code</th>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
-
-    <br/>
-    <br/>
-
-    <div class="pure-form">
-        <select id="year">
-            <option value="1">1st Year</option>
-            <option value="2">2nd Year</option>
-            <option value="3">3rd Year</option>
-            <option value="4">4th Year</option>
-        </select>
-        <select id="semester">
-            <option value="1">1st Semester</option>
-            <option value="2">2nd Semester</option>
-        </select>
-        <br/>
-        <select id="subject_to_filter_courses" onchange="filterCourses()">
-            <option value=""></option>
-            <option value="ALL">ALL</option>
-        </select>
-        <select id="course" onchange="courseSelectionChanged()"></select>
-        <br/>
-        <select id="grade"></select>
-        <input id="include_in_overall_gpa_checkbox" type="checkbox">Include in overall GPA</input>
-        <input id="repeat_checkbox" type="checkbox">Repeat</input>
-        <br/>
-        <button id="add_course" class="pure-button pure-button-primary" onclick="addCourse()">Add</button>
-    </div>
-
-
-    <hr/>
-    <br/>
-
-    <div>
-        <div id="student_courses_year1_div">
-            <h5>Year 1</h5>
-            <table id="student_courses_year1_table" class="pure-table pure-table-bordered">
-                <thead>
-                    <th></th>
-                    <th>Semester</th>
-                    <th>Code</th>
-                    <th>Title</th>
-                    <th>Credits</th>
-                    <th>Grade</th>
-                    <th>Overall GPA</th>
-                </thead>
-                <tbody>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan=6></td>
-                        <td>0.00</td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-        <br/>
-        <div id="student_courses_year2_div">
-            <h5>Year 2</h5>
-            <table id="student_courses_year2_table" class="pure-table pure-table-bordered">
-                <thead>
-                    <th></th>
-                    <th>Semester</th>
-                    <th>Code</th>
-                    <th>Title</th>
-                    <th>Credits</th>
-                    <th>Grade</th>
-                    <th>Overall GPA</th>
-                </thead>
-                <tbody>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan=6></td>
-                        <td>0.00</td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-        <br/>
-        <div id="student_courses_year3_div">
-            <h5>Year 3</h5>
-            <table id="student_courses_year3_table" class="pure-table pure-table-bordered">
-                <thead>
-                    <th></th>
-                    <th>Semester</th>
-                    <th>Code</th>
-                    <th>Title</th>
-                    <th>Credits</th>
-                    <th>Grade</th>
-                    <th>Overall GPA</th>
-                </thead>
-                <tbody>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan=6></td>
-                        <td>0.00</td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-        <br/>
-        <div id="student_courses_year4_div">
-            <h5>Year 4</h5>
-            <table id="student_courses_year4_table" class="pure-table pure-table-bordered">
-                <thead>
-                    <th></th>
-                    <th>Semester</th>
-                    <th>Code</th>
-                    <th>Title</th>
-                    <th>Credits</th>
-                    <th>Grade</th>
-                    <th>Overall GPA</th>
-                </thead>
-                <tbody>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan=6></td>
-                        <td>0.00</td>
-                    </tr>
-                </tfoot>
-            </table>
+        <div id="fb_like_share">
+            <!-- placeholder buttons only. this content will be replaced after merging to gh-pages branch -->
+            <button class="button-xsmall pure-button">Share</button>
+            <button class="button-xsmall pure-button">Like</button>
         </div>
     </div>
-    <br/>
-    <hr/>
 
-    <div id="gpas">
-        <div id="final_subject_gpas"></div>
+    <div class="content">
+        <div id="subject_selection_div" class="pure-g">
+            <div class="pure-u-1">
+                <h4>Main subjects:</h4>
+            </div>
+            <div class="pure-u-1">
 
-        <h4>Overall GPA: <span id="final_overall_gpa">0.00</span></h4>
-    </div>
+                <div class="pure-form">
+                    <label for="main_subjects">Subject:</label>
+                    <select id="main_subjects"></select>
 
-    <div>
-        <button id="save_button" class="pure-button pure-button-primary" onClick="saveStudentData()">Save</button>
+                    <button id="add_main_subject" class="pure-button pure-button-primary" onClick="addSubject()">Add Subject</button>
+                </div>
 
-        <div>
-            <button id="load_button" class="pure-button pure-button-primary" onClick="loadStudentData()">Load</button>
-            <input type="file" id="load_file_input" accept="application/json" style="display:none" onchange="handleFile(this.files)">
+                <table id="student_main_subjects_table" class="pure-table pure-table-bordered">
+                    <thead>
+                        <th></th>
+                        <th>Subject</th>
+                        <th>Code</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <hr/>
+
+        <div id="add_student_courses_div" class="pure-g">
+            <div class="pure-u-1">
+                <h4>Add Courses:</h4>
+            </div>
+            <div class="pure-u-1">
+                <div class="pure-form">
+                    <select id="year">
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
+                    <select id="semester">
+                        <option value="1">1st Semester</option>
+                        <option value="2">2nd Semester</option>
+                    </select>
+                    <br/>
+                    <select id="subject_to_filter_courses" onchange="filterCourses()">
+                        <option value=""></option>
+                        <option value="ALL">ALL</option>
+                    </select>
+                    <select id="course" onchange="courseSelectionChanged()"></select>
+                    <br/>
+                    <select id="grade"></select>
+                    <input id="include_in_overall_gpa_checkbox" type="checkbox">Include in overall GPA</input>
+                    <input id="repeat_checkbox" type="checkbox">Repeat</input>
+                    <br/>
+                    <button id="add_course" class="pure-button pure-button-primary" onclick="addCourse()">Add</button>
+                </div>
+            </div>
+        </div>
+
+        <hr/>
+
+        <div class="pure-g">
+            <div id="student_courses_year1_div" class="pure-u-1">
+                <h5>Year 1</h5>
+                <table id="student_courses_year1_table" class="pure-table pure-table-bordered">
+                    <thead>
+                        <th></th>
+                        <th>Semester</th>
+                        <th>Code</th>
+                        <th>Title</th>
+                        <th>Credits</th>
+                        <th>Grade</th>
+                        <th>Overall GPA</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan=6></td>
+                            <td>0.00</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <br/>
+            <div id="student_courses_year2_div" class="pure-u-1">
+                <h5>Year 2</h5>
+                <table id="student_courses_year2_table" class="pure-table pure-table-bordered">
+                    <thead>
+                        <th></th>
+                        <th>Semester</th>
+                        <th>Code</th>
+                        <th>Title</th>
+                        <th>Credits</th>
+                        <th>Grade</th>
+                        <th>Overall GPA</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan=6></td>
+                            <td>0.00</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <br/>
+            <div id="student_courses_year3_div" class="pure-u-1">
+                <h5>Year 3</h5>
+                <table id="student_courses_year3_table" class="pure-table pure-table-bordered">
+                    <thead>
+                        <th></th>
+                        <th>Semester</th>
+                        <th>Code</th>
+                        <th>Title</th>
+                        <th>Credits</th>
+                        <th>Grade</th>
+                        <th>Overall GPA</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan=6></td>
+                            <td>0.00</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <br/>
+            <div id="student_courses_year4_div" class="pure-u-1">
+                <h5>Year 4</h5>
+                <table id="student_courses_year4_table" class="pure-table pure-table-bordered">
+                    <thead>
+                        <th></th>
+                        <th>Semester</th>
+                        <th>Code</th>
+                        <th>Title</th>
+                        <th>Credits</th>
+                        <th>Grade</th>
+                        <th>Overall GPA</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan=6></td>
+                            <td>0.00</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <hr/>
+
+        <div id="gpas" class="pure-g">
+            <div id="final_subject_gpas" class="pure-u-1"></div>
+
+            <div class="pure-u-1">
+                <h4>Overall GPA: <span id="final_overall_gpa">0.00</span></h4>
+            </div>
         </div>
     </div>
+
 
     <!-- libraries -->
     <script type="text/javascript" src="./js/Blob.js/Blob.js"></script>
