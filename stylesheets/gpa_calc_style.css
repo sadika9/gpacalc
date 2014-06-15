@@ -1,0 +1,27 @@
+#menu {
+  position: fixed;
+  top: 0;
+}
+
+#fb_like_share {
+    float:right;
+}
+
+.button-xsmall {
+    font-size: 70%;
+}
+
+#subject_selection_div {
+}
+
+.content {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.delete_row_button {
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background: rgb(202, 60, 60);
+}
