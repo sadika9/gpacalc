@@ -1,4 +1,6 @@
 /****************** Sorting datasets ******************/
+
+/* defined in data/subjects.js */
 subjects.sort(function (a, b) {
     if (a.subject < b.subject)
         return -1;
@@ -7,6 +9,7 @@ subjects.sort(function (a, b) {
     return 0;
 });
 
+/* defined in data/courses.js */
 courses.sort(function (a, b) {
     if (a.code < b.code)
         return -1;
