@@ -433,10 +433,25 @@ function updateIncludeInOverallGPAState(object) {
     for (var i = 0; i < studentCourses.length; ++i) {
         if (studentCourses[i].course.code === courseCode) {
             studentCourses[i].include_in_overall_gpa = checkBoxState;
+            
+            /* update subject gpa states when overall gpa check box changed */
+            if (checkBoxState) { 
+                studentCourses[i].include_in_subject_gpa = [].concat(studentCourses[i].course.principal_subject_area);
+                var idx = studentCourses[i].include_in_subject_gpa.indexOf("Foundation");
+                if (idx > -1) {
+                    studentCourses[i].include_in_subject_gpa.splice(idx, 1);
+                }
+            }
+            else { /* need to remove current course from all subject gpas if user removes  the course from overall gpa */
+                studentCourses[i].include_in_subject_gpa = [];
+            }
+            
             break;
         }
     }
 
+    updateCourseTables();
+    updateSubjectGPAs();
     updateOverallGPAs();
 }
 
