@@ -399,16 +399,19 @@ function updateCourseTables() {
             eleChBx.onclick = function () {
                 updateIncludeInSubjectGPAState(this)
             };
-
-            for (var k = 0; k < studentCourses[i].include_in_subject_gpa.length; ++k) {
-                var subCode = studentCourses[i].include_in_subject_gpa[k];
-                if (subCode === studentSubjects[j].code) {
-                    eleChBx.checked = true;
-                    break;
-                } else {
-                    eleChBx.checked = false;
+            eleChBx.checked = false;
+            eleChBx.disabled = !studentCourses[i].include_in_overall_gpa;
+            
+            if (!eleChBx.disabled) {
+                for (var k = 0; k < studentCourses[i].include_in_subject_gpa.length; ++k) {
+                    var subCode = studentCourses[i].include_in_subject_gpa[k];
+                    if (subCode === studentSubjects[j].code) {
+                        eleChBx.checked = true;
+                        break;
+                    }
                 }
             }
+            
             cell.appendChild(eleChBx);
         }
     }
