@@ -382,6 +382,7 @@ function editCourse(object) {
             document.getElementById("edit_student_courses_modal_credits").value = stCourse.course.credits;
             document.getElementById("edit_student_courses_modal_semester").value = stCourse.semester;
             document.getElementById("edit_student_courses_modal_grade").value = stCourse.grade;
+            document.getElementById("edit_student_courses_modal_repeat").checked = stCourse.repeat;
 
             window.location.hash = "#edit_student_courses_modal";
             return;
@@ -399,6 +400,7 @@ function saveEditedStudentCourseDetail() {
             stCourse.semester = document.getElementById("edit_student_courses_modal_semester").value;
             stCourse.course.credits = Number(document.getElementById("edit_student_courses_modal_credits").value);
             stCourse.grade = document.getElementById("edit_student_courses_modal_grade").value;
+            stCourse.repeat = document.getElementById("edit_student_courses_modal_repeat").checked;
 
             break;
         }
@@ -411,6 +413,7 @@ function saveEditedStudentCourseDetail() {
     document.getElementById("edit_student_courses_modal_semester").value = 0;
     document.getElementById("edit_student_courses_modal_credits").value = 0;
     document.getElementById("edit_student_courses_modal_grade").value = 0;
+    document.getElementById("edit_student_courses_modal_repeat").checked = false;
 
     /** update **/
     updateCourseTables();
