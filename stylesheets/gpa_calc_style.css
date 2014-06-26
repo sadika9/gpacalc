@@ -19,6 +19,13 @@
     margin-bottom: 50px;
 }
 
+.edit_row_button {
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background: rgb(66, 184, 221);
+}
+
 .delete_row_button {
     color: white;
     border-radius: 4px;

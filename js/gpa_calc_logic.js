@@ -1,4 +1,6 @@
 /****************** Sorting datasets ******************/
+
+/* defined in data/subjects.js */
 subjects.sort(function (a, b) {
     if (a.subject < b.subject)
         return -1;
@@ -7,6 +9,7 @@ subjects.sort(function (a, b) {
     return 0;
 });
 
+/* defined in data/courses.js */
 courses.sort(function (a, b) {
     if (a.code < b.code)
         return -1;
@@ -36,12 +39,22 @@ for (var i = 0, nSubs = subjects.length; i < nSubs; ++i) {
 }
 
 for (var i = 0, nGrades = grades.length; i < nGrades; ++i) {
-    var x = document.createElement("OPTION");
-    x.setAttribute("value", grades[i].grade);
+    var grade = grades[i].grade;
 
-    var t = document.createTextNode(grades[i].grade);
+    var x = document.createElement("OPTION");
+    x.setAttribute("value", grade);
+
+    var t = document.createTextNode(grade);
     x.appendChild(t);
     document.getElementById("grade").appendChild(x);
+
+    /** edit course modal grades **/
+    x = document.createElement("OPTION");
+    x.setAttribute("value", grade);
+
+    t = document.createTextNode(grade);
+    x.appendChild(t);
+    document.getElementById("edit_student_courses_modal_grade").appendChild(x);
 }
 
 /****************** global variables ******************/
@@ -353,6 +366,58 @@ function removeCourse(object) {
     showYearDivs();
 }
 
+function editCourse(object) {
+    while (object.tagName != 'TR') {
+        object = object.parentNode;
+    }
+
+    var courseCode = object.getElementsByTagName('TD')[2].innerHTML;
+    for (var i = 0; i < studentCourses.length; ++i) {
+        if (studentCourses[i].course.code === courseCode) {
+            var stCourse = studentCourses[i];
+
+            document.getElementById("edit_student_courses_modal_label_show").innerHTML = stCourse.course.code + " - " + stCourse.course.title;
+            document.getElementById("edit_student_courses_modal_course_code").innerHTML = stCourse.course.code;
+            document.getElementById("edit_student_courses_modal_year").innerHTML = stCourse.year;
+            document.getElementById("edit_student_courses_modal_credits").value = stCourse.course.credits;
+            document.getElementById("edit_student_courses_modal_semester").value = stCourse.semester;
+            document.getElementById("edit_student_courses_modal_grade").value = stCourse.grade;
+
+            window.location.hash = "#edit_student_courses_modal";
+            return;
+        }
+    }
+}
+
+function saveEditedStudentCourseDetail() {
+    var courseCode = document.getElementById("edit_student_courses_modal_course_code").innerHTML;
+
+    for (var i = 0; i < studentCourses.length; ++i) {
+        if (studentCourses[i].course.code === courseCode) {
+            var stCourse = studentCourses[i];
+
+            stCourse.semester = document.getElementById("edit_student_courses_modal_semester").value;
+            stCourse.course.credits = Number(document.getElementById("edit_student_courses_modal_credits").value);
+            stCourse.grade = document.getElementById("edit_student_courses_modal_grade").value;
+
+            break;
+        }
+    }
+
+    /* reset modal */
+    document.getElementById("edit_student_courses_modal_label_show").innerHTML = "";
+    document.getElementById("edit_student_courses_modal_course_code").innerHTML = ""
+    document.getElementById("edit_student_courses_modal_year").innerHTML = "";
+    document.getElementById("edit_student_courses_modal_semester").value = 0;
+    document.getElementById("edit_student_courses_modal_credits").value = 0;
+    document.getElementById("edit_student_courses_modal_grade").value = 0;
+
+    /** update **/
+    updateCourseTables();
+    updateOverallGPAs();
+    updateSubjectGPAs();
+}
+
 function updateCourseTables() {
     for (var i = 1; i <= 4; ++i) {
         document.getElementById("student_courses_year" + i + "_table").getElementsByTagName("TBODY")[0].innerHTML = "";
@@ -364,13 +429,21 @@ function updateCourseTables() {
         var row = tbody.insertRow(rowCount);
 
         var cell = row.insertCell(0);
-        var eleBtn = document.createElement("button");
-        eleBtn.className = "pure-button delete_row_button";
-        eleBtn.innerHTML = "X";
-        eleBtn.onclick = function () {
+        eleEditBtn = document.createElement("button");
+        eleEditBtn.className = "pure-button edit_row_button";
+        eleEditBtn.innerHTML = "E";
+        eleEditBtn.onclick = function () {
+            editCourse(this)
+        };
+        cell.appendChild(eleEditBtn);
+
+        var eleDelBtn = document.createElement("button");
+        eleDelBtn.className = "pure-button delete_row_button";
+        eleDelBtn.innerHTML = "X";
+        eleDelBtn.onclick = function () {
             removeCourse(this)
         };
-        cell.appendChild(eleBtn);
+        cell.appendChild(eleDelBtn);
 
         row.insertCell(1).appendChild(document.createTextNode(studentCourses[i].semester));
         row.insertCell(2).appendChild(document.createTextNode(studentCourses[i].course.code));
@@ -396,16 +469,19 @@ function updateCourseTables() {
             eleChBx.onclick = function () {
                 updateIncludeInSubjectGPAState(this)
             };
+            eleChBx.checked = false;
+            eleChBx.disabled = !studentCourses[i].include_in_overall_gpa;
 
-            for (var k = 0; k < studentCourses[i].include_in_subject_gpa.length; ++k) {
-                var subCode = studentCourses[i].include_in_subject_gpa[k];
-                if (subCode === studentSubjects[j].code) {
-                    eleChBx.checked = true;
-                    break;
-                } else {
-                    eleChBx.checked = false;
+            if (!eleChBx.disabled) {
+                for (var k = 0; k < studentCourses[i].include_in_subject_gpa.length; ++k) {
+                    var subCode = studentCourses[i].include_in_subject_gpa[k];
+                    if (subCode === studentSubjects[j].code) {
+                        eleChBx.checked = true;
+                        break;
+                    }
                 }
             }
+
             cell.appendChild(eleChBx);
         }
     }
@@ -430,10 +506,25 @@ function updateIncludeInOverallGPAState(object) {
     for (var i = 0; i < studentCourses.length; ++i) {
         if (studentCourses[i].course.code === courseCode) {
             studentCourses[i].include_in_overall_gpa = checkBoxState;
+
+            /* update subject gpa states when overall gpa check box changed */
+            if (checkBoxState) {
+                studentCourses[i].include_in_subject_gpa = [].concat(studentCourses[i].course.principal_subject_area);
+                var idx = studentCourses[i].include_in_subject_gpa.indexOf("Foundation");
+                if (idx > -1) {
+                    studentCourses[i].include_in_subject_gpa.splice(idx, 1);
+                }
+            }
+            else { /* need to remove current course from all subject gpas if user removes  the course from overall gpa */
+                studentCourses[i].include_in_subject_gpa = [];
+            }
+
             break;
         }
     }
 
+    updateCourseTables();
+    updateSubjectGPAs();
     updateOverallGPAs();
 }
 

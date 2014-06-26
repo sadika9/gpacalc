@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="./stylesheets/pure/grids-responsive-min.css">
     <!--<![endif]-->
 
+    <link rel="stylesheet" href="./stylesheets/drublic-css-modal/modal.css">
     <link rel="stylesheet" href="./stylesheets/gpa_calc_style.css">
 	
 	<style type='text/css'>
@@ -31,6 +32,7 @@
 </head>
 
 <body onload="showYearDivs()">
+<<<<<<< HEAD
 
   <div id="fb-root"></div>
   <script>(function(d, s, id) {
@@ -41,6 +43,8 @@
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));</script>
   
+=======
+>>>>>>> master
     <div id="menu" class="pure-menu pure-menu-open pure-menu-horizontal" style='background-color:#333; padding:25px;'>
         <ul>
 			<li style='color:#fff;'><b style="font-size:25px;">GPA</b>Calculator</li>
@@ -226,10 +230,63 @@
         </div>
     </div>
 
+    <!-- modal to edit row of student courses table(s) -->
+    <section class="modal--show" id="edit_student_courses_modal" tabindex="-1" role="dialog" aria-labelledby="edit_student_courses_modal_label_show" aria-hidden="true">
+
+        <div class="modal-inner">
+            <header>
+                <h2 id="edit_student_courses_modal_label_show"></h2>
+            </header>
+
+            <div class="modal-content">
+                <div class="pure-form pure-form-aligned">
+                    <fieldset>
+                        <!-- required do not delete -->
+                        <div class="pure-control-group" hidden="true">
+                            <label for="edit_student_courses_modal_course_code">Course Code</label>
+                            <span id="edit_student_courses_modal_course_code"></span>
+                        </div>
+
+                        <div class="pure-control-group">
+                            <label for="edit_student_courses_modal_year">Year</label>
+                            <span id="edit_student_courses_modal_year"></span>
+                        </div>
+
+                        <div class="pure-control-group">
+                            <label for="edit_student_courses_modal_semester">Semester</label>
+                            <select id="edit_student_courses_modal_semester">
+                                <option value="1">1st Semester</option>
+                                <option value="2">2nd Semester</option>
+                            </select>
+                        </div>
+
+                        <div class="pure-control-group">
+                            <label for="edit_student_courses_modal_credits">Credits</label>
+                            <input id="edit_student_courses_modal_credits" type="number" min="0" max="4"></input>
+                        </div>
+
+                        <div class="pure-control-group">
+                            <label for="edit_student_courses_modal_grade">Grade</label>
+                            <select id="edit_student_courses_modal_grade"></select>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <footer>
+                <a href="#!" class="pure-button pure-button-primary" data-dismiss="modal" data-close="Close" onClick="saveEditedStudentCourseDetail()">Ok</a>
+                <a href="#!" class="pure-button" data-dismiss="modal" data-close="Close">Cancel</a>
+            </footer>
+        </div>
+
+        <a href="#!" class="modal-close" title="Close this modal" data-dismiss="modal" data-close="Close">&times;</a>
+    </section>
+
 
     <!-- libraries -->
     <script type="text/javascript" src="./js/Blob.js/Blob.js"></script>
     <script type="text/javascript" src="./js/FileSaver.js/FileSaver.js"></script>
+    <script type="text/javascript" src="./js/drublic-css-modal/modal.js"></script>
 
     <!-- data -->
     <script type="text/javascript" src="./data/courses.js"></script>
