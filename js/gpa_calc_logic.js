@@ -1,3 +1,8 @@
+/* notifications by using Android-Toast library */
+function notify(message){
+    var toast = new Android_Toast({content: message, duration: 2500, position: 'bottom'});
+}
+
 /****************** Sorting datasets ******************/
 
 /* defined in data/subjects.js */
@@ -91,6 +96,8 @@ function addSubject() {
     updateExistingCoursesSubjectGPAStates("add_subject", subject);
     updateCourseTables();
     updateSubjectGPAs();
+
+    notify("<em>New (Subject):</em> " + subject.subject);
 }
 
 function removeSubject(object) {
@@ -98,9 +105,11 @@ function removeSubject(object) {
         object = object.parentNode;
     }
 
+    var subj = "";
     var code = object.getElementsByTagName('TD')[2].innerHTML;
     for (var i = 0, nStuSubj = studentSubjects.length; i < nStuSubj; ++i) {
         if (studentSubjects[i].code === code) {
+            subj = studentSubjects[i].subject;
             studentSubjects.splice(i, 1);
             break;
         }
@@ -116,6 +125,8 @@ function removeSubject(object) {
     updateExistingCoursesSubjectGPAStates("remove_subject", subject);
     updateCourseTables();
     updateSubjectGPAs();
+
+    notify("<em>Remove (Subject):</em> " + subj);
 }
 
 function updateMainSubjectsTable() {
@@ -344,6 +355,8 @@ function addCourse() {
     updateOverallGPAs();
     updateSubjectGPAs();
     showYearDivs();
+
+    notify("<em>New (Course):</em> " + course.code + " - " + course.title);
 }
 
 function removeCourse(object) {
@@ -352,8 +365,10 @@ function removeCourse(object) {
     }
 
     var courseCode = object.getElementsByTagName('TD')[2].innerHTML;
+    var courseTitle = "";
     for (var i = 0; i < studentCourses.length; ++i) {
         if (studentCourses[i].course.code === courseCode) {
+            courseTitle = studentCourses[i].course.title;
             studentCourses.splice(i, 1);
             break;
         }
@@ -364,6 +379,8 @@ function removeCourse(object) {
     updateOverallGPAs();
     updateSubjectGPAs();
     showYearDivs();
+
+    notify("<em>Remove (Course):</em> " + courseCode + " - " + courseTitle);
 }
 
 function editCourse(object) {
@@ -405,6 +422,8 @@ function saveEditedStudentCourseDetail() {
             break;
         }
     }
+
+    notify("<em>Update (Course):</em> " + document.getElementById("edit_student_courses_modal_label_show").innerHTML);
 
     /* reset modal */
     document.getElementById("edit_student_courses_modal_label_show").innerHTML = "";
