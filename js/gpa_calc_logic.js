@@ -177,7 +177,7 @@ function updateStudentCoursesTableHeadings() {
 }
 
 function updateStudentCoursesTableFooters() {
-    var nFixedCells = 2; // number of fixed cells in footer row
+    var nFixedCells = 4; // number of fixed cells in footer row
 
     // remove subject hedings first
     for (j = 1; j <= 4; ++j) {
@@ -355,6 +355,7 @@ function addCourse() {
     updateOverallGPAs();
     updateSubjectGPAs();
     showYearDivs();
+    updateCreditsInTables();
 
     notify("<em>New (Course):</em> " + course.code + " - " + course.title);
 }
@@ -379,6 +380,7 @@ function removeCourse(object) {
     updateOverallGPAs();
     updateSubjectGPAs();
     showYearDivs();
+    updateCreditsInTables();
 
     notify("<em>Remove (Course):</em> " + courseCode + " - " + courseTitle);
 }
@@ -438,6 +440,7 @@ function saveEditedStudentCourseDetail() {
     updateCourseTables();
     updateOverallGPAs();
     updateSubjectGPAs();
+    updateCreditsInTables();
 }
 
 function updateCourseTables() {
@@ -548,6 +551,7 @@ function updateIncludeInOverallGPAState(object) {
     updateCourseTables();
     updateSubjectGPAs();
     updateOverallGPAs();
+    updateCreditsInTables();
 }
 
 function updateIncludeInSubjectGPAState(object) {
@@ -579,8 +583,47 @@ function updateIncludeInSubjectGPAState(object) {
     updateSubjectGPAs();
 }
 
+/****************** logic: total credits in table ********************/
+function credits(year) {
+    var totCreditsIncludedInGpa = totalCreditsIncludedInGpa(year);
+    var totCredits = totalCredits(year);
+    
+
+    var tfoot = document.getElementById("student_courses_year" + year + "_table").getElementsByTagName("TFOOT")[0];
+
+    tfoot.rows[0].cells[1].innerHTML = totCreditsIncludedInGpa + ' / ' + totCredits;
+}
+
+function updateCreditsInTables() {
+  var sumCreditsIncludedInGpa = 0;
+  var sumAllCredits = 0;
+  
+  for (var i = 1; i <= 4; ++i) {
+      credits(i);
+      
+      sumCreditsIncludedInGpa += totalCreditsIncludedInGpa(i);
+      sumAllCredits += totalCredits(i);
+  }
+  
+  document.getElementById("final_credits").innerHTML = sumCreditsIncludedInGpa + ' / ' + sumAllCredits;
+}
+
 /****************** logic: calculating Overall GPAs ******************/
 function totalCredits(year) {
+    var totalCredits = 0;
+
+    for (var i = 0, nStuCourses = studentCourses.length; i < nStuCourses; ++i) {
+        var stuCourse = studentCourses[i];
+
+        if (stuCourse.year === year) {
+            totalCredits += stuCourse.course.credits;
+        }
+    }
+
+    return totalCredits;
+}
+
+function totalCreditsIncludedInGpa(year) {
     var totalCredits = 0;
 
     for (var i = 0, nStuCourses = studentCourses.length; i < nStuCourses; ++i) {
@@ -613,7 +656,7 @@ function finalOverallGPA() {
     var sumGradePointIntoCredit = 0;
 
     for (var i = 1; i <= 4; ++i) {
-        sumCredits += totalCredits(i);
+        sumCredits += totalCreditsIncludedInGpa(i);
         sumGradePointIntoCredit += totalGradePointIntoCredit(i);
     }
 
@@ -626,17 +669,17 @@ function finalOverallGPA() {
 }
 
 function overallGPA(year) {
-    var sumCredits = totalCredits(year);
+    var sumCredits = totalCreditsIncludedInGpa(year);
     var sumGradePointIntoCredit = totalGradePointIntoCredit(year);
 
     var tfoot = document.getElementById("student_courses_year" + year + "_table").getElementsByTagName("TFOOT")[0];
 
     if (sumCredits <= 0) {
-        tfoot.rows[0].cells[1].innerHTML = "0.00";
+        tfoot.rows[0].cells[3].innerHTML = "0.00";
         return;
     }
 
-    tfoot.rows[0].cells[1].innerHTML = precise_round(sumGradePointIntoCredit / sumCredits, 2);
+    tfoot.rows[0].cells[3].innerHTML = precise_round(sumGradePointIntoCredit / sumCredits, 2);
 }
 
 function updateOverallGPAs() {
@@ -716,7 +759,7 @@ function overallSubjectGPA(year, subjectCode) {
     if (stuSubjIndex < 0)
         return;
 
-    var nFixedCells = 2; // number of fixed footer cells
+    var nFixedCells = 4; // number of fixed footer cells
     var subjCellIndex = nFixedCells + stuSubjIndex; // index of subject footer cell
 
 
@@ -801,6 +844,7 @@ function handleFile(files) {
             updateSubjectGPAs();
             updateOverallGPAs();
             showYearDivs();
+            updateCreditsInTables();
         }
     })(file);
 
