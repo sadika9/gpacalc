@@ -30,12 +30,12 @@
     </div>
 
     <!-- data -->
-    <script type="text/javascript" src="./data/courses.js"></script>
+    <script type="text/javascript" src="./lib/gpa_calc/courses.js"></script>
 
     <!-- logic -->
     <script type="text/javascript">
-        for (var i = 0; i < courses.length; ++i) {
-            var course = courses[i];
+        for (var i = 0; i < global_courses.length; ++i) {
+            var course = global_courses[i];
 
             var tbody = document.getElementById("courses_table").getElementsByTagName("TBODY")[0];
 
@@ -43,21 +43,21 @@
             var row = tbody.insertRow(rowCount);
 
             // Code
-            row.insertCell(0).appendChild(document.createTextNode(courses[i].code));
+            row.insertCell(0).appendChild(document.createTextNode(course.code));
             // Title
-            row.insertCell(1).appendChild(document.createTextNode(courses[i].title));
+            row.insertCell(1).appendChild(document.createTextNode(course.title));
             // Credits
-            row.insertCell(2).appendChild(document.createTextNode(courses[i].credits));
+            row.insertCell(2).appendChild(document.createTextNode(course.credits));
             // Prerequisites
-            row.insertCell(3).appendChild(document.createTextNode(courses[i].prerequisites));
+            row.insertCell(3).appendChild(document.createTextNode(course.prerequisites));
             // Equivalent
-            row.insertCell(4).appendChild(document.createTextNode(courses[i].equivalent));
+            row.insertCell(4).appendChild(document.createTextNode(course.equivalent));
             // Include In GPA
-            row.insertCell(5).appendChild(document.createTextNode((!courses[i].exclude_from_gpa) ? "Yes" : "No"));
+            row.insertCell(5).appendChild(document.createTextNode((!course.exclude_from_gpa) ? "Yes" : "No"));
             // Compulsory for Degree
-            row.insertCell(6).appendChild(document.createTextNode(courses[i].compulsory_for_degree));
+            row.insertCell(6).appendChild(document.createTextNode(course.compulsory_for_degree));
             // CPrincipal Subject Area
-            row.insertCell(7).appendChild(document.createTextNode(courses[i].principal_subject_area));
+            row.insertCell(7).appendChild(document.createTextNode(course.principal_subject_area));
         }
     </script>
 </body>
