@@ -74,7 +74,7 @@
                     <button id="add_subject_button" class="pure-button pure-button-primary">Add Subject</button>
                 </div>
 
-                <table id="student_main_subjects_table" class="pure-table pure-table-bordered" style="width:50%;">
+                <table id="student_subjects_table" class="pure-table pure-table-bordered" style="width:50%;">
                     <thead>
                         <th>Edit</th>
                         <th>Subject</th>
@@ -89,7 +89,7 @@
 
         
 
-        <div id="add_student_courses_div" class="pure-g" style='border-bottom:1px solid #ccc; padding:25px;'>
+        <div class="pure-g" style='border-bottom:1px solid #ccc; padding:25px;'>
             <div class="pure-u-1">
                 <h4>Add Courses:</h4>
             </div>
@@ -122,117 +122,21 @@
             </div>
         </div>
 
-
-
-        <div class="pure-g" style='border-bottom:1px solid #ccc; padding:25px;'>
-            <div id="student_courses_year1_div" class="pure-u-1">
-                <h5>Year 1</h5>
-                <table id="student_courses_year1_table" class="pure-table pure-table-bordered">
-                    <thead>
-                        <th></th>
-                        <th>Semester</th>
-                        <th>Code</th>
-                        <th>Title</th>
-                        <th>Credits</th>
-                        <th>Grade</th>
-                        <th>Overall GPA</th>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan=4></td>
-                            <td></td>
-                            <td></td>
-                            <td>0.00</td>
-                        </tr>
-                    </tfoot>
-                </table>
+        <div class='pure-g' style='border-bottom:1px solid #ccc; padding:25px;'>
+            <div class='pure-u-1'>
+                <table id='student_courses_table' class='pure-table pure-table-bordered'></table>
             </div>
             <br/>
-            <div id="student_courses_year2_div" class="pure-u-1">
-                <h5>Year 2</h5>
-                <table id="student_courses_year2_table" class="pure-table pure-table-bordered">
-                    <thead>
-                        <th></th>
-                        <th>Semester</th>
-                        <th>Code</th>
-                        <th>Title</th>
-                        <th>Credits</th>
-                        <th>Grade</th>
-                        <th>Overall GPA</th>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan=4></td>
-                            <td></td>
-                            <td></td>
-                            <td>0.00</td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-            <br/>
-            <div id="student_courses_year3_div" class="pure-u-1">
-                <h5>Year 3</h5>
-                <table id="student_courses_year3_table" class="pure-table pure-table-bordered">
-                    <thead>
-                        <th></th>
-                        <th>Semester</th>
-                        <th>Code</th>
-                        <th>Title</th>
-                        <th>Credits</th>
-                        <th>Grade</th>
-                        <th>Overall GPA</th>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan=4></td>
-                            <td></td>
-                            <td></td>
-                            <td>0.00</td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-            <br/>
-            <div id="student_courses_year4_div" class="pure-u-1">
-                <h5>Year 4</h5>
-                <table id="student_courses_year4_table" class="pure-table pure-table-bordered">
-                    <thead>
-                        <th></th>
-                        <th>Semester</th>
-                        <th>Code</th>
-                        <th>Title</th>
-                        <th>Credits</th>
-                        <th>Grade</th>
-                        <th>Overall GPA</th>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan=4></td>
-                            <td></td>
-                            <td></td>
-                            <td>0.00</td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
         </div>
-        
-        <h4 style=' text-align:center; padding:25px; font-size:16px;'>Credits (Included in GPA / Total Credits): <span id="final_credits">0 / 0</span></h4>
-      
-        <div id="gpas" class="pure-g" style=' text-align:center; padding:25px; font-size:16px;'>
+         
+        <div class="pure-g" style=' text-align:center; padding:25px; font-size:16px;'>
             <div id="final_subject_gpas" class="pure-u-1"></div>
 
-            <div class="pure-u-1">
-                <h4>Overall GPA: <span id="final_overall_gpa">0.00</span></h4>
+            <div id='details' class="pure-u-1">
+                <div id="subject_gpas"></div>
+                <p>Overall GPA: <span id="overall_gpa">0.00</span></p>
+                <p># Credits (in GPA): <span id="n_credits_in_gpa">0</span></p>
+                <p># Credits (Total): <span id="n_credits">0</span></p>
             </div>
         </div>
     </div>
