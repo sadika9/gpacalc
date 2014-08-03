@@ -1,210 +1,227 @@
-<!doctype html>
-<html>
-
-<head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>GPA Calc</title>
     <meta name="description" content="GPA calculator for Faculty of Science, University of Peradeniya">
     <meta name="keywords" content="GPA Calculator, GPA, GPA Calc, Faculty of Science, University of Peradeniya">
 
-    <link rel="stylesheet" href="./stylesheets/pure/pure-min.css">
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="./stylesheets/pure/grids-responsive-old-ie-min.css">
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-    <link rel="stylesheet" href="./stylesheets/pure/grids-responsive-min.css">
-    <!--<![endif]-->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
-    <link rel="stylesheet" href="./stylesheets/drublic-css-modal/modal.css">
-    <link rel="stylesheet" href="./stylesheets/android-toast/toast.css">
-    <link rel="stylesheet" href="./stylesheets/gpa_calc_style.css">
-	
-	<style type='text/css'>
-		body{font-size:13px;}
-		
-		input,select
-		{
-			margin:5px;
-		}
-		
-		table{width:100%;}
-		
-		.footer {
-		  text-align:center; 
-		  padding:25px;
-		}
-	</style>
-	
+    <link rel="stylesheet" href="./stylesheets/gpa_calc_style.css">	
 </head>
 
 <body>
-    <div id="menu" class="pure-menu pure-menu-open pure-menu-horizontal" style='background-color:#333; padding:25px;'>
-        <ul>
-			<li style='color:#fff;'><b style="font-size:25px;">GPA</b>Calculator</li>
+    <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" style='color:#fff;' href="#"><b style="font-size:25px;">GPA</b>Calculator</a>
+        </div>          
+          <div id="fb_like_share"  class="navbar-right" style='padding-left:15px;'>
+          </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
             <li>
-                <a id="open_button">Open</a>
-                <input type="file" id="file_input" accept="application/json" style="display:none">
+                <a id="open_button"><span class="glyphicon glyphicon-open"></span> Open</a>
+                <input type="file" id="file_input" accept="application/json">
             </li>
-            <li><a id="save_button">Save</a>
-            </li>
-            <li><a href="./all_courses.html">All Courses</a>
-            </li>
-        </ul>
+            <li><a id="save_button"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a></li>
+          </ul>
+        </div><!-- /.nav-collapse -->
+      </div><!-- /.container -->
+    </div><!-- /.navbar -->
 
-        <div id="fb_like_share" style='margin-right:40px;'>
-            <!-- placeholder buttons only. this content will be replaced after merging to gh-pages branch -->
-            <button class="button-xsmall pure-button">Share</button>
-            <button class="button-xsmall pure-button">Like</button>
+    <div class="all_container container">
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Add Subjects</h3>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label for="subjects_combo_in_add_subjects">Subject</label>
+                            <select id="subjects_combo_in_add_subjects" class="form-control"></select>
+                        </div>
+                        <button id="add_subject_button" type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span> Add</button>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+                    <table id="student_subjects_table" class="table table-condensed">
+                        <thead>
+                            <th>Edit</th>
+                            <th>Subject</th>
+                            <th>Code</th>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+          </div>
         </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Add Courses</h3>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-1">
+                    <div class="form-group">
+                        <label for="year_combo_in_add_course">Year</label>
+                        <select id="year_combo_in_add_course" class="form-control">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>           
+                </div>                        
+                <div class="col-xs-12 col-sm-1">             
+                    <div class="form-group">
+                        <label for="semester_combo_in_add_course">Semester</label>
+                        <select id="semester_combo_in_add_course" class="form-control">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <div class="form-group">
+                        <label for="subjects_combo_in_add_course">Subject</label>
+                        <select id="subjects_combo_in_add_course" class="form-control">
+                            <option value=""></option>
+                            <option value="ALL">ALL</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    <div class="form-group">
+                        <label for="subjects_combo_in_add_course">Course</label>
+                        <select id="course_combo_in_add_course" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-1">
+                    <div class="form-group">
+                        <label for="grades_combo_in_add_course">Grade</label>
+                        <select id="grades_combo_in_add_course" class="form-control"></select>
+                    </div> 
+                </div> 
+                <div class="col-xs-12 col-sm-1">
+                    <div class="checkbox">
+                        <label>
+                            <input id="include_in_overall_gpa_checkbox_in_add_course" type="checkbox">GPA
+                        </label>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-1">
+                    <div class="checkbox">
+                        <label>
+                            <input id="repeat_checkbox_in_add_course" type="checkbox">Repeat
+                        </label>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-1">
+                    <button id="add_course_button" type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span> Add</button>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Courses</h3>
+          </div>
+          <div class="panel-body">
+            <table id='student_courses_table' class="table table-hover table-condensed"></table>
+          </div>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="row text-center" style="font-size:16px;">
+                <div id="final_subject_gpas" class="col-xs-12"></div>
+
+                <div id='details' class="col-xs-12">
+                    <div id="subject_gpas"></div>
+                    <p>Overall GPA: <span id="overall_gpa">0.00</span></p>
+                    <p># Credits (in GPA): <span id="n_credits_in_gpa">0</span></p>
+                    <p># Credits (Total): <span id="n_credits">0</span></p>
+                </div>
+            </div>
+          </div>
+        </div>
+
     </div>
 
-    <div class="content">
-        <div id="subject_selection_div" class="pure-g" style='border-bottom:1px solid #ccc; padding:25px;'>
-            <div class="pure-u-1">
-                <h4>Main Subjects:</h4>
+    <div class="footer">By : <a href="https://github.com/dinesho">Dinesh Opatha</a> &amp; <a href="https://github.com/sadika9">Sadika Sumanapala</a></div>
+
+    <!-- Edit Course Modal -->
+    <div class="modal fade" id="edit_course_modal" tabindex="-1" role="dialog" aria-labelledby="edit_course_modal_label" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="edit_course_modal_label"></h4>
+          </div>
+          <div class="modal-body">
+            <div class="form">    
+              <!-- required do not delete --> 
+              <div class="form-group" hidden="true">
+                <label for="edit_course_modal_course_code" class="control-label">Course Code</label>
+                <span id="edit_course_modal_course_code"></span>
+              </div> 
+              <div class="form-group" hidden="true">
+                <label for="edit_course_modal_year" class="control-label">Year</label>
+                <spban id="edit_course_modal_year"></span>
+              </div>
+              <div class="form-group">
+                <label for="edit_course_modal_semester" class="control-label">Semester</label>
+                <select id="edit_course_modal_semester" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="edit_course_modal_credits" class="control-label">Credits</label>
+                <input id="edit_course_modal_credits" class="form-control" type="number" min="0" max="4"></input>
+              </div>
+              <div class="form-group">
+                <label for="edit_course_modal_grade" class="control-label">Grade</label>
+                <select id="edit_course_modal_grade" class="form-control"></select>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input id="edit_course_modal_repeat" type="checkbox"> Repeat
+                </label>
+              </div>
             </div>
-            <div class="pure-u-1">
-
-                <div class="pure-form" style="float:left; width:50%;">
-                    <label for="subjects_combo_in_add_subjects">Subject:</label>
-                    <select id="subjects_combo_in_add_subjects"></select>
-
-                    <button id="add_subject_button" class="pure-button pure-button-primary">Add Subject</button>
-                </div>
-
-                <table id="student_subjects_table" class="pure-table pure-table-bordered" style="width:50%;">
-                    <thead>
-                        <th>Edit</th>
-                        <th>Subject</th>
-                        <th>Code</th>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-
-            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button id="edit_course_modal_save_button" type="button" class="btn btn-primary">Save changes</button>
+          </div>
         </div>
-
-        
-
-        <div class="pure-g" style='border-bottom:1px solid #ccc; padding:25px;'>
-            <div class="pure-u-1">
-                <h4>Add Courses:</h4>
-            </div>
-            <div class="pure-u-1">
-                <div class="pure-form">
-                    <select id="year_combo_in_add_course">
-                        <option value="1">1st Year</option>
-                        <option value="2">2nd Year</option>
-                        <option value="3">3rd Year</option>
-                        <option value="4">4th Year</option>
-                    </select>
-                    <select id="semester_combo_in_add_course">
-                        <option value="1">1st Semester</option>
-                        <option value="2">2nd Semester</option>
-                    </select>
-                    
-                    <select id="subjects_combo_in_add_course">
-                        <option value=""></option>
-                        <option value="ALL">ALL</option>
-                    </select>
-                    <select id="course_combo_in_add_course"></select>
-                    
-                    <select id="grades_combo_in_add_course"></select>
-					
-                    <input id="include_in_overall_gpa_checkbox_in_add_course" type="checkbox">Include in overall GPA</input>
-                    <input id="repeat_checkbox_in_add_course" type="checkbox">Repeat</input>
-                    
-                    <button id="add_course_button" class="pure-button pure-button-primary">Add</button>
-                </div>
-            </div>
-        </div>
-
-        <div class='pure-g' style='border-bottom:1px solid #ccc; padding:25px;'>
-            <div class='pure-u-1'>
-                <table id='student_courses_table' class='pure-table pure-table-bordered'></table>
-            </div>
-            <br/>
-        </div>
-         
-        <div class="pure-g" style=' text-align:center; padding:25px; font-size:16px;'>
-            <div id="final_subject_gpas" class="pure-u-1"></div>
-
-            <div id='details' class="pure-u-1">
-                <div id="subject_gpas"></div>
-                <p>Overall GPA: <span id="overall_gpa">0.00</span></p>
-                <p># Credits (in GPA): <span id="n_credits_in_gpa">0</span></p>
-                <p># Credits (Total): <span id="n_credits">0</span></p>
-            </div>
-        </div>
+      </div>
     </div>
-    
-    <div class="footer">By : <a href="https://github.com/dinesho">Dinesh Opatha</a> & <a href="https://github.com/sadika9">Sadika Sumanapala</a></div>
-
-    <!-- modal to edit row of student courses table(s) -->
-    <section class="modal--show" id="edit_student_courses_modal" tabindex="-1" role="dialog" aria-labelledby="edit_student_courses_modal_label_show" aria-hidden="true">
-
-        <div class="modal-inner">
-            <header>
-                <h2 id="edit_student_courses_modal_label_show"></h2>
-            </header>
-
-            <div class="modal-content">
-                <div class="pure-form pure-form-aligned">
-                    <fieldset>
-                        <!-- required do not delete -->
-                        <div class="pure-control-group" hidden="true">
-                            <label for="edit_student_courses_modal_course_code">Course Code</label>
-                            <span id="edit_student_courses_modal_course_code"></span>
-                        </div>
-
-                        <div class="pure-control-group">
-                            <label for="edit_student_courses_modal_year">Year</label>
-                            <span id="edit_student_courses_modal_year"></span>
-                        </div>
-
-                        <div class="pure-control-group">
-                            <label for="edit_student_courses_modal_semester">Semester</label>
-                            <select id="edit_student_courses_modal_semester">
-                                <option value="1">1st Semester</option>
-                                <option value="2">2nd Semester</option>
-                            </select>
-                        </div>
-
-                        <div class="pure-control-group">
-                            <label for="edit_student_courses_modal_credits">Credits</label>
-                            <input id="edit_student_courses_modal_credits" type="number" min="0" max="4"></input>
-                        </div>
-
-                        <div class="pure-control-group">
-                            <label for="grade_combo_in_edit_student_courses_modal">Grade</label>
-                            <select id="grade_combo_in_edit_student_courses_modal"></select>
-                        </div>
-
-                        <div class="pure-control-group">
-                            <label for="edit_student_courses_modal_repeat">Repeat</label>
-                            <input id="edit_student_courses_modal_repeat" type="checkbox"></input>
-                        </div>
-                    </fieldset>
-                </div>
-            </div>
-
-            <footer>
-                <a id='edit_student_courses_modal_save_button' href="#!" class="pure-button pure-button-primary" data-dismiss="modal" data-close="Close">Ok</a>
-                <a href="#!" class="pure-button" data-dismiss="modal" data-close="Close">Cancel</a>
-            </footer>
-        </div>
-
-        <a href="#!" class="modal-close" title="Close this modal" data-dismiss="modal" data-close="Close">&times;</a>
-    </section>
 
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/floatthead/1.2.8/jquery.floatThead.min.js"></script>
     <script type="text/javascript" src="./lib/Blob.js/Blob.js"></script>
     <script type="text/javascript" src="./lib/FileSaver.js/FileSaver.js"></script>
-    <script type="text/javascript" src="./js/drublic-css-modal/modal.js"></script>
-    <script type="text/javascript" src="./js/android-toast/toast.js"></script>
+    <script type="text/javascript" src="./lib/Notify.js/notify.min.js"></script>
 
     <script type="text/javascript" src="./lib/gpa_calc/courses.js"></script>
     <script type="text/javascript" src="./lib/gpa_calc/grades.js"></script>
