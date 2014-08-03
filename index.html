@@ -39,7 +39,7 @@
 	
 </head>
 
-<body onload="showYearDivs()">
+<body>
     <div id="menu" class="pure-menu pure-menu-open pure-menu-horizontal" style='background-color:#333; padding:25px;'>
         <ul>
 			<li style='color:#fff;'><b style="font-size:25px;">GPA</b>Calculator</li>
@@ -68,10 +68,10 @@
             <div class="pure-u-1">
 
                 <div class="pure-form" style="float:left; width:50%;">
-                    <label for="main_subjects">Subject:</label>
-                    <select id="main_subjects"></select>
+                    <label for="subjects_combo_in_add_subjects">Subject:</label>
+                    <select id="subjects_combo_in_add_subjects"></select>
 
-                    <button id="add_main_subject" class="pure-button pure-button-primary" onClick="addSubject()">Add Subject</button>
+                    <button id="add_subject_button" class="pure-button pure-button-primary">Add Subject</button>
                 </div>
 
                 <table id="student_main_subjects_table" class="pure-table pure-table-bordered" style="width:50%;">
@@ -95,29 +95,29 @@
             </div>
             <div class="pure-u-1">
                 <div class="pure-form">
-                    <select id="year">
+                    <select id="year_combo_in_add_course">
                         <option value="1">1st Year</option>
                         <option value="2">2nd Year</option>
                         <option value="3">3rd Year</option>
                         <option value="4">4th Year</option>
                     </select>
-                    <select id="semester">
+                    <select id="semester_combo_in_add_course">
                         <option value="1">1st Semester</option>
                         <option value="2">2nd Semester</option>
                     </select>
                     
-                    <select id="subject_to_filter_courses" onchange="filterCourses()">
+                    <select id="subjects_combo_in_add_course">
                         <option value=""></option>
                         <option value="ALL">ALL</option>
                     </select>
-                    <select id="course" onchange="courseSelectionChanged()"></select>
+                    <select id="course_combo_in_add_course"></select>
                     
-                    <select id="grade"></select>
+                    <select id="grades_combo_in_add_course"></select>
 					
-                    <input id="include_in_overall_gpa_checkbox" type="checkbox">Include in overall GPA</input>
-                    <input id="repeat_checkbox" type="checkbox">Repeat</input>
+                    <input id="include_in_overall_gpa_checkbox_in_add_course" type="checkbox">Include in overall GPA</input>
+                    <input id="repeat_checkbox_in_add_course" type="checkbox">Repeat</input>
                     
-                    <button id="add_course" class="pure-button pure-button-primary" onclick="addCourse()">Add</button>
+                    <button id="add_course_button" class="pure-button pure-button-primary">Add</button>
                 </div>
             </div>
         </div>
@@ -275,8 +275,8 @@
                         </div>
 
                         <div class="pure-control-group">
-                            <label for="edit_student_courses_modal_grade">Grade</label>
-                            <select id="edit_student_courses_modal_grade"></select>
+                            <label for="grade_combo_in_edit_student_courses_modal">Grade</label>
+                            <select id="grade_combo_in_edit_student_courses_modal"></select>
                         </div>
 
                         <div class="pure-control-group">
@@ -288,7 +288,7 @@
             </div>
 
             <footer>
-                <a href="#!" class="pure-button pure-button-primary" data-dismiss="modal" data-close="Close" onClick="saveEditedStudentCourseDetail()">Ok</a>
+                <a id='edit_student_courses_modal_save_button' href="#!" class="pure-button pure-button-primary" data-dismiss="modal" data-close="Close">Ok</a>
                 <a href="#!" class="pure-button" data-dismiss="modal" data-close="Close">Cancel</a>
             </footer>
         </div>
@@ -296,19 +296,15 @@
         <a href="#!" class="modal-close" title="Close this modal" data-dismiss="modal" data-close="Close">&times;</a>
     </section>
 
-
-    <!-- libraries -->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="./js/Blob.js/Blob.js"></script>
     <script type="text/javascript" src="./js/FileSaver.js/FileSaver.js"></script>
     <script type="text/javascript" src="./js/drublic-css-modal/modal.js"></script>
     <script type="text/javascript" src="./js/android-toast/toast.js"></script>
 
-    <!-- data -->
     <script type="text/javascript" src="./lib/gpa_calc/courses.js"></script>
     <script type="text/javascript" src="./lib/gpa_calc/grades.js"></script>
     <script type="text/javascript" src="./lib/gpa_calc/subjects.js"></script>
-
-    <!-- logic -->
     <script type="text/javascript" src="./lib/gpa_calc/precise_round.js"></script>
     <script type="text/javascript" src="./lib/gpa_calc/subject.js"></script>
     <script type="text/javascript" src="./lib/gpa_calc/course.js"></script>>
