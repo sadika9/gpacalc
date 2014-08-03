@@ -43,11 +43,11 @@
     <div id="menu" class="pure-menu pure-menu-open pure-menu-horizontal" style='background-color:#333; padding:25px;'>
         <ul>
 			<li style='color:#fff;'><b style="font-size:25px;">GPA</b>Calculator</li>
-            <li><a id="save_button" onClick="saveStudentData()">Save</a>
-            </li>
             <li>
-                <a id="load_button" onClick="loadStudentData()">Load</a>
-                <input type="file" id="load_file_input" accept="application/json" style="display:none" onchange="handleFile(this.files)">
+                <a id="open_button">Open</a>
+                <input type="file" id="file_input" accept="application/json" style="display:none">
+            </li>
+            <li><a id="save_button">Save</a>
             </li>
             <li><a href="./all_courses.html">All Courses</a>
             </li>
@@ -201,8 +201,8 @@
     </section>
 
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="./js/Blob.js/Blob.js"></script>
-    <script type="text/javascript" src="./js/FileSaver.js/FileSaver.js"></script>
+    <script type="text/javascript" src="./lib/Blob.js/Blob.js"></script>
+    <script type="text/javascript" src="./lib/FileSaver.js/FileSaver.js"></script>
     <script type="text/javascript" src="./js/drublic-css-modal/modal.js"></script>
     <script type="text/javascript" src="./js/android-toast/toast.js"></script>
 
@@ -215,8 +215,8 @@
     <script type="text/javascript" src="./lib/gpa_calc/enrolled_course.js"></script>
     <script type="text/javascript" src="./lib/gpa_calc/student.js"></script>
     <script type="text/javascript" src="./lib/gpa_calc/gpa.js"></script>
+    <script type="text/javascript" src="./lib/gpa_calc/io.js"></script>
     <script type="text/javascript" src="./lib/gpa_calc/controller.js"></script>
-    <script type="text/javascript" src="./lib/gpa_calc/save_load.js"></script>
 </body>
 
 </html>
