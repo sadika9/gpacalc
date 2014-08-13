@@ -35,3 +35,9 @@ thead th {
 #file_input {
     display:none;
 }
+
+.year_row,
+.summary_row {
+    font-weight:bold;
+    background-color: #f5f5f5;
+}
